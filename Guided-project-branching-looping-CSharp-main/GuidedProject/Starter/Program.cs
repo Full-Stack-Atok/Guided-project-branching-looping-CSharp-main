@@ -110,14 +110,54 @@ do
     {
         case "1":
             // List all of out current pet information
-            Console.WriteLine("this app feature is coming soon - please check back to see progress.");
+            
+            for (int i = 0; i < maxPets; i++) 
+            {
+                if (ourAnimals[i, 0] != "ID #: ") 
+                {
+                    Console.WriteLine();
+                    for(int j = 0; j < 6; j++) 
+                    {
+                        Console.WriteLine(ourAnimals[i, j]);
+                    }
+                }
+            }
+
             Console.WriteLine("Press the enter to continue.");
             readResult = Console.ReadLine();
             break;
 
         case "2":
             // Add a new animal friend to the ourAnimals array
-            Console.WriteLine("this app feature is coming soon - please check back to see progress.");
+            
+            string anotherPet = "y";
+            int petCount = 0;
+
+            for (int i = 0; i < maxPets; i++) 
+            {
+                if (ourAnimals[i, 0] != "ID #: ")
+                {
+                    petCount += 1;
+                }
+            }
+
+            if (petCount < maxPets) 
+            {
+                Console.WriteLine($"We currently have {petCount} pets that need homes. We can manage {(maxPets - petCount)} more.");
+            }
+
+            while (anotherPet != "y" && petCount < maxPets)
+            {
+                // increment petCount (the array is zero-based, so we increment the counter after adding to the array)
+                petCount = petCount + 1;
+
+                if(petCount < maxPets)
+                {
+                    // Another pet?
+                    Console.WriteLine("Do you want to enter info for another pet (y/n)");
+                }
+            }
+
             Console.WriteLine("Press the enter to continue.");
             readResult = Console.ReadLine();
             break;
@@ -129,14 +169,34 @@ do
             readResult = Console.ReadLine();
             break;
         case "4":
+            // Ensure the animal nicknames and personality descriptions are complete
+            Console.WriteLine("Challenge Project - please check back soon to see progress.");
+            Console.WriteLine("Press the enter key to continue.");
+            readResult = Console.ReadLine();
             break;
         case "5":
+            // Edit an animal’s age");
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
             break;
         case "6":
+            // Edit an animal’s personality description");
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
             break;
         case "7":
+             // Display all cats with a specified characteristic
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
             break;
         case "8":
+            // Display all dogs with a specified characteristic
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
             break;
         default:
             break;
