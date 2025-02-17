@@ -293,30 +293,33 @@ do
         case "3":
             // Ensure animal age and physical description are complete
             Console.WriteLine("Ensuring all animal ages and physical descriptions are complete...\n");
+            
 
             for (int i = 0; i < maxPets; i++)
             {
                 // skip empty pets ("default "ID #: ")
-                if (ourAnimals[i, 0] == "ID #: ")
+                if (string.IsNullOrEmpty(ourAnimals[i, 0]) || ourAnimals[i, 0].Trim() == "ID #: ")
                 {
                     continue;
                 }
-                Console.WriteLine($"{ourAnimals[i, 0]}, {ourAnimals[i, 1]}"); // Show ID & Species
+
+                Console.WriteLine($"{ourAnimals[i, 0]}, \n{ourAnimals[i, 1]}"); // Show ID & Species
 
                 // Validate & Update Animal Age
                 bool validAge = false;
                 while(!validAge)
                 {
-                    Console.Write($"Current Age:{ourAnimals[i, 2]}. Enter new age (or press Enter to keep it.)");
-                    string? inputAge = Console.ReadLine();
+                    Console.WriteLine($"Current Age: {ourAnimals[i, 2].Replace("Age: ", "")}. \nEnter new age (or press Enter to keep it.)");
+                    string? inputAge = Console.ReadLine()?.Trim();
 
-                    if(string.IsNullOrWhiteSpace(inputAge))
+                    if (string.IsNullOrEmpty(inputAge))
                     {
-                        validAge = true; // Keep the current value if the user presses Enter
+                        validAge = true;
                     }
-                    else if(int.TryParse(inputAge, out _)) // Check if numeric
+                    
+                    else if(int.TryParse(inputAge, out int validNumericAge) && validNumericAge > 0) // Check if numeric
                     {
-                        ourAnimals[i, 2] = inputAge;
+                        ourAnimals[i, 2] = "Age: " + inputAge;
                         validAge = true;
                     }
                     else 
@@ -326,19 +329,99 @@ do
                 }
 
                 // Validate & Update Animal Physical Description
-                bool
+                bool validDescription = false;
+                while (!validDescription)
+                {
+                    Console.WriteLine($"Current Physical Description: {ourAnimals[i, 4].Replace("Physical description: ", "")}. \nEnter new description (or press Enter to keep it.)");
+                    string? inputDescription = Console.ReadLine()?.Trim(); // Trim whitespace
+                    
+                    if (string.IsNullOrEmpty(inputDescription))
+                    {
+                        validDescription = true;
+                    }
+
+                    else if (inputDescription.Length < 3 || inputDescription == "." || inputDescription == ".." || inputDescription.Length < 3)
+                    {
+                        Console.WriteLine("Description cannot be empty or too short. Please provide a valid description.");
+                    }
+                    else
+                    {
+                        ourAnimals [i, 4] = "Physical description: " + inputDescription;
+                        validDescription = true;
+                    }
+                }
+
+                Console.WriteLine(); // Spacing between animals
             }
-
-
-            Console.WriteLine("Press the enter key to continue.");
+            Console.WriteLine("\nAge and physical description fields are complete for all of our friends. \nPress Enter key to continue.");
             readResult = Console.ReadLine();
             break;
+
         case "4":
             // Ensure the animal nicknames and personality descriptions are complete
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
-            Console.WriteLine("Press the enter key to continue.");
+            Console.WriteLine("Ensuring animal nicknames and personality descriptions are complete...\n");
+
+            for (int i = 0; i < maxPets; i++)
+            {
+                // skip uninitialized or empty pet entries
+                if(string.IsNullOrWhiteSpace(ourAnimals[i, 0]) || ourAnimals[i, 0].Trim() == "ID #: ")
+                {
+                    continue;
+                }
+
+                Console.WriteLine($"{ourAnimals[i, 0]}, \n{ourAnimals[i, 1]}"); // show id and species
+
+                // validate & update animal nickname
+                bool validNickname = false;
+                while (!validNickname)
+                {
+                    Console.WriteLine($"Current Nickname: {ourAnimals[i, 3].Replace("Nickname: ", "")}. \nEnter new nickname (or press Enter to kept it.)");
+                    string? inputNickname = Console.ReadLine()?.Trim();
+
+                    if (string.IsNullOrWhiteSpace(inputNickname))
+                    {
+                        validEntry = true;
+                    }
+                    else if (inputNickname.Length < 2 || inputNickname == "." || inputNickname == "..")
+                    {
+                        Console.WriteLine("Nickname cannot be empty or too short. Please provide a valid nickname.");
+                    }
+                    else
+                    {
+                        ourAnimals[i, 3] = "Nickname: " + inputNickname;
+                        validNickname = true;
+                    }
+                }
+
+                // validate & update animal personality description
+                bool validPersonality = false;
+                while(!validPersonality)
+                {
+                    Console.WriteLine($"Currently Personality Description: {ourAnimals[i, 5].Replace("Personality: ", "")}. \nEnter new personality description (or press Enter to keep it.)");
+                    string? inputPersonality = Console.ReadLine()?.Trim();
+
+                    if (string.IsNullOrWhiteSpace(inputPersonality))
+                    {
+                        validPersonality = true;
+                    }
+                    else if (inputPersonality.Length < 3 || inputPersonality == "." || inputPersonality == "..") 
+                    {
+                        Console.WriteLine("Personality description cannot be empty or too short. Please provide a valid description.");
+                    }
+                    else
+                    {
+                        ourAnimals[i, 5] = "Personality: " + inputPersonality;
+                        validPersonality = true;
+                    }
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("\nNickname and personality description fields are complete for all of our friends. \nPress Enter key to continue.");
             readResult = Console.ReadLine();
             break;
+
         case "5":
             // Edit an animal’s age");
             Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
